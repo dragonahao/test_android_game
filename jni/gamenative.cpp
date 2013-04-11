@@ -57,7 +57,7 @@ Java_com_android_game_GameRenderer_nativePushTexture(JNIEnv* env, jobject thiz, 
      	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
      	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
      	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,w,h, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)cImgData);
-     	GameManager::getManaget()->setTexture(texID);
+     	GameManager::getInstance().setTexture(texID);
      	delete[] cImgData;
 }
 #ifdef __cplusplus
@@ -65,7 +65,7 @@ Java_com_android_game_GameRenderer_nativePushTexture(JNIEnv* env, jobject thiz, 
 #endif
 
 void* GameThread(void*){
-	GameManager::getManaget()->loop();
+	GameManager::getInstance().loop();
 	return (void*)0;
 }
 
@@ -73,7 +73,7 @@ void* GameThread(void*){
 JNIEXPORT void
 Java_com_android_game_GameRenderer_nativeInit( JNIEnv*  env )
 {
-	GameManager::getManaget()->init();
+	GameManager::getInstance().init();
 	pthread_t thread = 0;
 	pthread_create(&thread, NULL, &GameThread, NULL);
 	pthread_detach(thread);
@@ -83,7 +83,7 @@ JNIEXPORT void
 Java_com_android_game_GameRenderer_nativeResize( JNIEnv*  env, jobject  thiz, jint w, jint h )
 {
 	GameManager::lock();
-	GameManager::getManaget()->onResize(w,h);
+	GameManager::getInstance().onResize(w,h);
 	GameManager::unlock();
 }
 
@@ -92,7 +92,7 @@ JNIEXPORT void
 Java_com_android_game_GameRenderer_nativeRender( JNIEnv*  env )
 {
 	GameManager::lock();
-	GameManager::getManaget()->draw();
+	GameManager::getInstance().draw();
 	GameManager::unlock();
 }
 
@@ -103,7 +103,7 @@ Java_com_android_game_GameGLSurfaceView_nativeOnTouch(JNIEnv*  env, jobject  thi
 	touchAct.act=(TouchAction::Action)event;
 	touchAct.x=x;
 	touchAct.y=y;
-	GameManager::getManaget()->onTouchEvent(touchAct);
+	GameManager::getInstance().onTouchEvent(touchAct);
 	GameManager::unlock();
 }
 

@@ -10,9 +10,11 @@
 #include <list>
 #include <pthread.h>
 
-class GameManager{
-	GameManager():texCount(0){}
-	static GameManager* gameManager;
+class GameManager {
+    class Level;
+	GameManager();
+	GameManager(const GameManager &) {}
+	void operator=(const GameManager & ){}
 	int texCount;
 	std::list<Joystick::JoystickAction> userMove;
 	Score score;
@@ -23,22 +25,19 @@ class GameManager{
 	NoteList leftNoteList;
 	NoteList rightNoteList;
 	static pthread_mutex_t mutex;
+	Level * lvl;
 public:
 	static void lock();
 	static void unlock();
-	static GameManager* getManaget(){
-		if(gameManager!=NULL)
-			return gameManager;
-		else{
-			gameManager=new GameManager();
-			return gameManager;
-		}
+	static GameManager& getInstance(){
+	    static GameManager gameManager;
+	    return gameManager;
 	}
 	void init();
 	void loop();
 	void draw();
 	void onTouchEvent(const TouchAction& touchAct);
-	void onResize(const int w,const int h);
+	void onResize(const int w, const int h);
 	void setTexture(int texID);
 };
 #endif

@@ -10,39 +10,12 @@
  * */
 class Texture{
 public:
-	Texture(int idTex=0,bool alpha=false) : idTexture(idTex),useAlpha(alpha) {
-		coordsTex[0]=0;
-		coordsTex[1]=1;
-		coordsTex[2]=1;
-		coordsTex[3]=1;
-		coordsTex[4]=0;
-		coordsTex[5]=0;
-		coordsTex[6]=1;
-		coordsTex[7]=0;
-		for(int i=0;i<4;i++){
-			coordIndex[i]=i;
-		}
-	}
-	inline void setUseAlpha(bool alpha){
-		useAlpha=alpha;
-	}
-	inline void setDiagonal(const Diagonal& _diagonal){//Point2f pos0,Point2f pos1){
-		diagonal= _diagonal;
-		coords[0]=_diagonal.pos0.x;
-		coords[1]=_diagonal.pos1.y;
-		coords[2]=_diagonal.pos1.x;
-		coords[3]=_diagonal.pos1.y;
-		coords[4]=_diagonal.pos0.x;
-		coords[5]=_diagonal.pos0.y;
-		coords[6]=_diagonal.pos1.x;
-		coords[7]=_diagonal.pos0.y;
-	}
-	inline Diagonal getDiagonal(){
-		return diagonal;
-	}
-	inline void setID(const GLint& id){
-		idTexture=id;
-	}
+	Texture(int idTex = 0, bool alpha = false) ;
+	virtual ~Texture();
+	void setUseAlpha(bool alpha);
+	void setDiagonal(const Diagonal& _diagonal);
+	Diagonal getDiagonal();
+	void setID(const GLint& id);
 	virtual void draw();
 protected:
 	GLint idTexture;
