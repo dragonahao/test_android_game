@@ -15,7 +15,7 @@ class GameManager {
 	GameManager();
 	GameManager(const GameManager &) {}
 	void operator=(const GameManager & ){}
-	int texCount;
+	int texСounter;
 	std::list<Joystick::JoystickAction> userMove;
 	Score score;
 	Texture background;
@@ -29,7 +29,7 @@ class GameManager {
 public:
 	static void lock();
 	static void unlock();
-	static GameManager& getInstance(){
+	static GameManager& getInstance() {
 	    static GameManager gameManager;
 	    return gameManager;
 	}

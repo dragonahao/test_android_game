@@ -5,31 +5,31 @@
 #include <GLES/glext.h>
 
 struct Point2f{
-	Point2f(float _x = 0, float _y = 0):x(_x),y(_y){}
+	Point2f(float _x = 0, float _y = 0):x(_x), y(_y){}
 	float x;
 	float y;
 };
 
 struct Point2i{
-	Point2i(int _x = 0, int _y = 0):x(_x),y(_y){}
+	Point2i(int _x = 0, int _y = 0):x(_x), y(_y){}
 	int x;
 	int y;
 };
 
 struct Point2s{
-	Point2s(short _x = 0, short _y = 0):x(_x),y(_y){}
+	Point2s(short _x = 0, short _y = 0):x(_x), y(_y){}
 	short x;
 	short y;
 };
 
 struct SizeI{
-	SizeI(int _w = 0, int _h = 0):w(_w),h(_h){}
+	SizeI(int _w = 0, int _h = 0):w(_w), h(_h){}
 	int w;
 	int h;
 };
 
 struct SizeF{
-	SizeF(float _w = 0, float  _h = 0):w(_w),h(_h){}
+	SizeF(float _w = 0, float  _h = 0):w(_w), h(_h){}
 	float w;
 	float h;
 };
@@ -52,7 +52,7 @@ struct Diagonal{
 bool cmp1D(float Ax1, float Ax2, float Bx1, float Bx2);
 bool vertical1Dcmp(const Diagonal& diag1, const Diagonal& diag2);
 
-class Screen{
+class Screen {
 	static SizeI screenSize;
 	static SizeF pixelSize;
 	static SizeF viewSize;

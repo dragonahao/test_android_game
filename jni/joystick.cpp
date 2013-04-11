@@ -64,10 +64,10 @@ PBAction PushButton::touch2PBAction(const TouchAction::Action & act){
 }
 
 Joystick::Joystick(){
-    pbUp->setDiagonal(Diagonal(-0.15f,0.4f,0.15f,0.0f));
-    pbDown->setDiagonal(Diagonal(-0.15f,-0.4f,0.15f,-0.8f));
-    pbLeft->setDiagonal(Diagonal(-0.45f,0.0f,-0.15f,-0.4f));
-    pbRight->setDiagonal(Diagonal(0.15f,0.0f,0.45f,-0.4f));
+    pbUp->setDiagonal(Diagonal(-0.15f, 0.4f, 0.15f, 0.0f));
+    pbDown->setDiagonal(Diagonal(-0.15f, -0.4f, 0.15f, -0.8f));
+    pbLeft->setDiagonal(Diagonal(-0.45f, 0.0f, -0.15f, -0.4f));
+    pbRight->setDiagonal(Diagonal(0.15f, 0.0f, 0.45f, -0.4f));
 }
 
 Joystick::~Joystick() {
@@ -102,19 +102,15 @@ void Joystick::setTex(JoystickAction pbType, int texID, bool onPress = true){
 
 JoystickAction Joystick::onTouchEvent(const TouchAction& touchAct){
     if(pbLeft->pbOnTouch(touchAct)==PushButton::PBPress){
-        //__android_log_print(ANDROID_LOG_INFO, "com.android.game", "~!~!~!~!~!OnTouch PB LEFT~~~~~");
         return PBLeft;
     }
     if(pbRight->pbOnTouch(touchAct)==PushButton::PBPress){
-        //__android_log_print(ANDROID_LOG_INFO, "com.android.game", "~!~!~!~!~!OnTouch PB RIGHT~~~~~");
         return PBRight;
     }
     if(pbUp->pbOnTouch(touchAct)==PushButton::PBPress){
-        //__android_log_print(ANDROID_LOG_INFO, "com.android.game", "~!~!~!~!~!OnTouch PB UP~~~~~");
         return PBUp;
     }
     if(pbDown->pbOnTouch(touchAct)==PushButton::PBPress){
-        //__android_log_print(ANDROID_LOG_INFO, "com.android.game", "~!~!~!~!~!OnTouch PB DOWN~~~~~");
         return PBDown;
     }
     return PBNone;

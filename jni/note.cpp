@@ -3,7 +3,7 @@
 GLint Note::texs[4];
 
 static int _rnd( int max ) {
-    return (((float)max)*rand()/(RAND_MAX+1.0));//(1+(int) (((float)max)*rand()/(RAND_MAX+1.0)));
+    return (((float)max)*rand()/(RAND_MAX + 1.0));//(1+(int) (((float)max)*rand()/(RAND_MAX+1.0)));
 }
 
 void Note::update() {
@@ -15,8 +15,8 @@ void Note::update() {
 	}
 	if(minDeltaTime>delta)
 		return;
-	float step = delta*speed*Screen::getPixelSize().w;
-	yPos = yPos-step;
+	float step = delta * speed * Screen::getPixelSize().w;
+	yPos = yPos - step;
 	tLastUpdate = tCurUpdate;
 	refresh();
 }
@@ -77,33 +77,35 @@ void NoteList::generate() {
     //minDelta = 10000;
 }
 
-NoteList::NoteList():tLastUpdate(0),speed(0),type(Note::toLeft),minDelta(0){}
+NoteList::NoteList():tLastUpdate(0), speed(0), type(Note::toLeft), minDelta(0) {
+
+}
 
 void NoteList::update(){
-    for(list<Note>::iterator it = listNote.begin(); it != listNote.end(); it++){
+    for(list<Note>::iterator it = listNote.begin(); it != listNote.end(); it++) {
         (*it).update();
     }
     generate();
 }
 
 void NoteList::draw(){
-    for(list<Note>::iterator it = listNote.begin(); it != listNote.end(); t++){
+    for(list<Note>::iterator it = listNote.begin(); it != listNote.end(); t++) {
         (*it).draw();
     }
 }
 
-void NoteList::setSpeed(const float& _speed){
+void NoteList::setSpeed(const float& _speed) {
     speed = _speed;
 }
 
-void NoteList::setType(const Note::Alignment & align){
+void NoteList::setType(const Note::Alignment & align) {
     type = align;
 }
 
-list<Note>* NoteList::get(){
+list<Note>* NoteList::get() {
     return &listNote;
 }
 
-void NoteList::clear(){
+void NoteList::clear() {
     listNote.clear();
 }

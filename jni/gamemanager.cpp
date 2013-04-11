@@ -25,8 +25,7 @@ public:
     }
 };
 
-
-GameManager():texCount(0){
+GameManager():texCounter(0){
     lvl = new Level();
 }
 
@@ -38,59 +37,64 @@ void GameManager::unlock() {
 	pthread_mutex_unlock( &mutex );
 }
 
+GameManager& getInstance() {
+    static GameManager gameManager;
+    return gameManager;
+}
+
 void GameManager::setTexture(int texID) {
-	if(texCount < 10)
-	 	 score.addDiget(texCount,texID);
-	if(texCount == 10)
+	if(texCounter < 10)
+	 	 score.addDiget(texCounter, texID);
+	if(texCounter == 10)
 		background.setID(texID);
-	if(texCount == 11) {
+	if(texCounter == 11) {
 		rightTube.setID(texID);
 		leftTube.setID(texID);
 	}
-	if(texCount == 12) {
+	if(texCounter == 12) {
 		joystick.setTex(Joystick::PBUp, texID, false);
 	}
-	if(texCount == 13) {
+	if(texCounter == 13) {
 		joystick.setTex(Joystick::PBUp, texID, true);
 	}
-	if(texCount == 14) {
+	if(texCounter == 14) {
 		joystick.setTex(Joystick::PBDown, texID, false);
 	}
-	if(texCount == 15) {
+	if(texCounter == 15) {
 		joystick.setTex(Joystick::PBDown, texID, true);
 	}
-	if(texCount == 16) {
+	if(texCounter == 16) {
 		joystick.setTex(Joystick::PBLeft, texID, false);
 	}
-	if(texCount == 17) {
+	if(texCounter == 17) {
 		joystick.setTex(Joystick::PBLeft, texID, true);
 	}
-	if(texCount == 18) {
+	if(texCounter == 18) {
 		joystick.setTex(Joystick::PBRight, texID, false);
 	}
-	if(texCount == 19) {
+	if(texCounter == 19) {
 		joystick.setTex(Joystick::PBRight, texID, true);
 	}
-	if(texCount == 20) {
-		Note::setTex(Note::up,texID);
+	if(texCounter == 20) {
+		Note::setTex(Note::up, texID);
 	}
-	if(texCount == 21) {
+	if(texCounter == 21) {
 		Note::setTex(Note::down, texID);
 	}
-	if(texCount == 22) {
+	if(texCounter == 22) {
 		Note::setTex(Note::left, texID);
 	}
-	if(texCount == 23) {
+	if(texCounter == 23) {
 		Note::setTex(Note::right, texID);
 	}
-	texCount++;
-	__android_log_print(ANDROID_LOG_INFO, "com.android.game", "textures[%d]=%d", texCount, texID);
+	texCounter++;
+	__android_log_print(ANDROID_LOG_INFO, "com.android.game", "textures[%d]=%d", texCounter, texID);
 }
 
 void GameManager::init(){
-	background.setDiagonal(Diagonal(Point2f(-1,1), Point2f(1,-1)));
-	leftTube.setDiagonal(Diagonal(Point2f(-1,0), Point2f(-0.7,-1)));
-	rightTube.setDiagonal(Diagonal(Point2f(0.7,0), Point2f(1,-1)));
+	background.setDiagonal(Diagonal(Point2f(-1, 1), Point2f(1, -1)));
+	leftTube.setDiagonal(Diagonal(Point2f(-1, 0), Point2f(-0.7, -1)));
+	rightTube.setDiagonal(Diagonal(Point2f(0.7, 0), Point2f(1, -1)));
 	leftNoteList.setSpeed(lvl->getSpeed());
 	rightNoteList.setType(Note::toRight);
 	rightNoteList.setSpeed(lvl->getSpeed);
@@ -129,7 +133,7 @@ void GameManager::draw() {
     joystick.draw();
 }
 
-Joystick::JoystickAction noteDir2JAct(Note::Direction dir) {
+static Joystick::JoystickAction noteDir2JAct(Note::Direction dir) {
 	if(dir == Note::left)
 		return Joystick::PBLeft;
 	if(dir == Note::right)

@@ -20,10 +20,6 @@ void Texture::draw(){
     glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glVertexPointer(2, GL_FLOAT, 0, coords);
     glTexCoordPointer(2, GL_FLOAT, 0, coordsTex);
-    /*for(int k=0;k<8;k+=2){
-        __android_log_print(ANDROID_LOG_INFO, "com.android.game", "coords pos[%d]={%f,%f}",k, coords[k], coords[k+1]);
-        __android_log_print(ANDROID_LOG_INFO, "com.android.game", "coordsTex pos[%d]={%f,%f}",k, coordsTex[k], coordsTex[k+1]);
-    }*/
     glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, coordIndex);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);

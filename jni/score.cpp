@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include "texture.h"
 
-void Score::draw(){
+void Score::draw() {
 	if(refreshCoord) {
 		int lenPixDiget=digetSize.w * maxCountDigets;
 		float HDiget = (float)digetSize.h * Screen::getPixelSize().h;//digetSize.h/screenSize.h;
@@ -31,14 +31,14 @@ void Score::draw(){
 	for(int i = maxCountDigets - 1; i >= 0; i--){
 		diget = number % 10;
 		number /= 10;
-		tex.setDiagonal(Diagonal(digetDiagonal[k-1],digetDiagonal[k]));
+		tex.setDiagonal(Diagonal(digetDiagonal[k-1], digetDiagonal[k]));
 		tex.setID(texDigets[diget]);
 		tex.draw();
 		k -= 2;
 	}
 }
 
-Score::Score():value(0),refreshCoord(true),yPos(1){
+Score::Score():value(0), refreshCoord(true), yPos(1){
     digetSize = SizeI(56, 56);
     digetDiagonal = new Point2f[maxCountDigets * 2];
 }
