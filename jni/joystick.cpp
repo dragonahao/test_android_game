@@ -1,7 +1,7 @@
 #include "joystick.h"
+#include "texture.h"
 
-class PushButton : public Texture{
-	//10-3 s
+class PushButton : public Texture {
 	int texOnPress;
 	int texOnRelease;
 public:
@@ -40,7 +40,7 @@ void PushButton::draw(){
     Texture::draw();
 }
 
-PBAction PushButton::pbOnTouch(const TouchAction& touchAct){
+PushButton::PBAction PushButton::pbOnTouch(const TouchAction& touchAct){
     if(touchAct.act == TouchAction::MOVE || touchAct.act==TouchAction::CANCEL){
         return PBNone;
     }
@@ -55,7 +55,7 @@ PBAction PushButton::pbOnTouch(const TouchAction& touchAct){
     return PBNone;
 }
 
-PBAction PushButton::touch2PBAction(const TouchAction::Action & act){
+PushButton::PBAction PushButton::touch2PBAction(const TouchAction::Action & act){
     if(act == TouchAction::UP)
         return PBRelease;
     if(act == TouchAction::DOWN)
@@ -64,6 +64,10 @@ PBAction PushButton::touch2PBAction(const TouchAction::Action & act){
 }
 
 Joystick::Joystick(){
+    pbUp = new PushButton();
+    pbDown = new PushButton();
+    pbLeft  = new PushButton();
+    pbRight = new PushButton();
     pbUp->setDiagonal(Diagonal(-0.15f, 0.4f, 0.15f, 0.0f));
     pbDown->setDiagonal(Diagonal(-0.15f, -0.4f, 0.15f, -0.8f));
     pbLeft->setDiagonal(Diagonal(-0.45f, 0.0f, -0.15f, -0.4f));
@@ -77,7 +81,7 @@ Joystick::~Joystick() {
     delete pbRight;
 }
 
-void Joystick::setTex(JoystickAction pbType, int texID, bool onPress = true){
+void Joystick::setTex(JoystickAction pbType, int texID, bool onPress){
     PushButton* pb;
     switch(pbType){
         case PBLeft:
@@ -100,7 +104,7 @@ void Joystick::setTex(JoystickAction pbType, int texID, bool onPress = true){
         pb->setTexOnRelease(texID);
 }
 
-JoystickAction Joystick::onTouchEvent(const TouchAction& touchAct){
+Joystick::JoystickAction Joystick::onTouchEvent(const TouchAction& touchAct){
     if(pbLeft->pbOnTouch(touchAct)==PushButton::PBPress){
         return PBLeft;
     }

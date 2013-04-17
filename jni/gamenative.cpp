@@ -16,6 +16,10 @@
 #include "action.h"
 #include "gamemanager.h"
 
+int texCount=0;
+int wTex, hTex;
+int backTexID=0;
+
 #ifdef __cplusplus
 extern "C" {
 #endif

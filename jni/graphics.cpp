@@ -7,8 +7,8 @@ SizeF Screen::viewSize = SizeF(2, 2);
 
 void Screen::setScreenSize(const SizeI &screenS) {
 	screenSize = screenS;
-	pixelSize.w = (float)1 / (screenSize.w);//*viewSize.w);
-	pixelSize.h = (float)1 / (screenSize.h);//*viewSize.h);
+	pixelSize.w = (float)1 / (screenSize.w);
+	pixelSize.h = (float)1 / (screenSize.h);
 }
 
 Point2f Screen::pixel2view(const Point2i& point){
@@ -30,7 +30,7 @@ SizeF& Screen::getPixelSize() {
 bool cmp1D(float Ax1, float Ax2, float Bx1, float Bx2){
 	if(Ax1 == Bx1 || Ax1 == Bx2 || Ax2 == Bx1 || Ax2 == Bx2)
 		return true;
-	if(Bx1>Bx2){
+	if(Bx1 > Bx2){
 		float tmp = Bx2;
 		Bx2 = Bx1;
 		Bx1 = tmp;
@@ -50,11 +50,9 @@ bool cmp1D(float Ax1, float Ax2, float Bx1, float Bx2){
 		return true;
 	if(Ax1 < Bx2 && Bx2 < Ax2)
 		return true;
-	__android_log_print(ANDROID_LOG_INFO, "com.android.game", "cmp1D return false;");
 	return false;
 }
 
-bool vertical1Dcmp(const Diagonal& diag1,const Diagonal& diag2){
-	__android_log_print(ANDROID_LOG_INFO, "com.android.game", "diag1.pos0.y=%f,diag1.pos1.y=%f,diag2.pos0.y=%f,diag2.pos1.y=%f",diag1.pos0.y,diag1.pos1.y,diag2.pos0.y,diag2.pos1.y);
+bool vertical1Dcmp(const Diagonal& diag1, const Diagonal& diag2){
 	return cmp1D(diag1.pos0.y, diag1.pos1.y, diag2.pos0.y, diag2.pos1.y);
 }

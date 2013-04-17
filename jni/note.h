@@ -9,7 +9,6 @@
 using namespace std;
 
 class Note : public Texture {
-	//Пикселей в 10-3 сек.
 	float speed;
 	unsigned long minDeltaTime;
 	void refresh();
@@ -24,7 +23,7 @@ public:
 		right,
 		up,
 		down
-	}direction;
+	};
 	enum Alignment{
 		toLeft,
 		toRight
@@ -35,7 +34,9 @@ public:
 	inline void setDirection(const Direction& dir);
 	Direction getDirection();
 	void update();
-	static void setTex(Direction dir,const GLint& texID);
+	static void setTex(Note::Direction dir,const GLint& texID);
+private:
+	Direction direction;
 };
 
 class NoteList{

@@ -25,8 +25,12 @@ public:
     }
 };
 
-GameManager():texCounter(0){
+GameManager::GameManager():texCounter(0) {
     lvl = new Level();
+}
+
+GameManager::~GameManager() {
+	delete lvl;
 }
 
 void GameManager::lock() {
@@ -37,58 +41,74 @@ void GameManager::unlock() {
 	pthread_mutex_unlock( &mutex );
 }
 
-GameManager& getInstance() {
+GameManager& GameManager::getInstance() {
     static GameManager gameManager;
     return gameManager;
 }
 
 void GameManager::setTexture(int texID) {
-	if(texCounter < 10)
-	 	 score.addDiget(texCounter, texID);
-	if(texCounter == 10)
+	const int backgroundTex = 10;
+	const int tubeTex = 11;
+
+	const int pushButtonUpTex = 12;
+	const int pushButtonUpOnPressTex = 13;
+	const int pushButtonDownTex = 14;
+    const int pushButtonDownOnPressTex = 15;
+    const int pushButtonLeftTex = 16;
+    const int pushButtonLeftOnPressTex = 17;
+    const int pushButtonRightTex = 18;
+    const int pushButtonRightOnPressTex = 19;
+
+	const int noteUpTex = 20;
+	const int noteDownTex = 21;
+	const int noteLeftTex = 22;
+	const int noteRightTex = 23;
+	//add digit texture
+	if(texCounter < backgroundTex)
+		score.addDigit(texCounter, texID);
+	if(texCounter == backgroundTex)
 		background.setID(texID);
-	if(texCounter == 11) {
+	if(texCounter == tubeTex) {
 		rightTube.setID(texID);
 		leftTube.setID(texID);
 	}
-	if(texCounter == 12) {
+	if(texCounter == pushButtonUpTex) {
 		joystick.setTex(Joystick::PBUp, texID, false);
 	}
-	if(texCounter == 13) {
+	if(texCounter == pushButtonUpOnPressTex) {
 		joystick.setTex(Joystick::PBUp, texID, true);
 	}
-	if(texCounter == 14) {
+	if(texCounter == pushButtonDownTex) {
 		joystick.setTex(Joystick::PBDown, texID, false);
 	}
-	if(texCounter == 15) {
+	if(texCounter == pushButtonDownOnPressTex) {
 		joystick.setTex(Joystick::PBDown, texID, true);
 	}
-	if(texCounter == 16) {
+	if(texCounter == pushButtonLeftTex) {
 		joystick.setTex(Joystick::PBLeft, texID, false);
 	}
-	if(texCounter == 17) {
+	if(texCounter == pushButtonLeftOnPressTex) {
 		joystick.setTex(Joystick::PBLeft, texID, true);
 	}
-	if(texCounter == 18) {
+	if(texCounter == pushButtonRightTex) {
 		joystick.setTex(Joystick::PBRight, texID, false);
 	}
-	if(texCounter == 19) {
+	if(texCounter == pushButtonRightOnPressTex) {
 		joystick.setTex(Joystick::PBRight, texID, true);
 	}
-	if(texCounter == 20) {
+	if(texCounter == noteUpTex) {
 		Note::setTex(Note::up, texID);
 	}
-	if(texCounter == 21) {
+	if(texCounter == noteDownTex) {
 		Note::setTex(Note::down, texID);
 	}
-	if(texCounter == 22) {
+	if(texCounter == noteLeftTex) {
 		Note::setTex(Note::left, texID);
 	}
-	if(texCounter == 23) {
+	if(texCounter == noteRightTex) {
 		Note::setTex(Note::right, texID);
 	}
 	texCounter++;
-	__android_log_print(ANDROID_LOG_INFO, "com.android.game", "textures[%d]=%d", texCounter, texID);
 }
 
 void GameManager::init(){
@@ -97,8 +117,7 @@ void GameManager::init(){
 	rightTube.setDiagonal(Diagonal(Point2f(0.7, 0), Point2f(1, -1)));
 	leftNoteList.setSpeed(lvl->getSpeed());
 	rightNoteList.setType(Note::toRight);
-	rightNoteList.setSpeed(lvl->getSpeed);
-	//userMove.clear();
+	rightNoteList.setSpeed(lvl->getSpeed());
 }
 
 void GameManager::onTouchEvent(const TouchAction& touchAct) {
@@ -106,17 +125,14 @@ void GameManager::onTouchEvent(const TouchAction& touchAct) {
 	if(pb!=Joystick::PBNone) {
 		userMove.push_back(pb);
 	}
-		//__android_log_print(ANDROID_LOG_INFO, "com.android.game", "OnTouch event=%d,X=%f,Y=%f",touchAct.act,touchAct.x,touchAct.y);
 }
 
 void GameManager::onResize(const int w,const int h) {
 	Screen::setScreenSize(SizeI(w,h));
-	__android_log_print(ANDROID_LOG_INFO, "com.android.game", "resize w=%d h=%d", w, h);
 }
 
 void GameManager::draw() {
     glViewport(0, 0, Screen::getScreenSize().w, Screen::getScreenSize().h);
-    //__android_log_print(ANDROID_LOG_INFO, "com.android.game", "resize w=%d h=%d", Screen::getScreenSize().w, Screen::getScreenSize().h);
     glClearColor(.0f,.0f,.5f,1);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);

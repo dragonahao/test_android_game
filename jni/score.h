@@ -8,16 +8,16 @@ class Score {
 public:
 	Score();
 	~Score();
-	bool addDiget(unsigned diget, int idTex);
-	void setDigetSize(const SizeI& size);
+	bool addDigit(unsigned digit, int idTex);
+	void setDigitSize(const SizeI& size);
 	int value;
 	void draw();
 private:
 	const GLfloat yPos;
-	SizeI digetSize;
+	SizeI digitSize;
 	bool refreshCoord;
-	int texDigets[10];
-	static const int maxCountDigets = 5;
-	Point2f* digetDiagonal;
+	int texDigits[10];
+	static const int maxCountDigits = 5;
+	Point2f* digitDiagonal;
 };
 #endif

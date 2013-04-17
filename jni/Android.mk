@@ -20,6 +20,7 @@ LOCAL_SRC_FILES := \
 	action.h \
 	gamenative.cpp \
 	joystick.h \
+	joystick.cpp \
 	time_.h \
 	
 LOCAL_LDLIBS := -lGLESv1_CM -ldl -llog

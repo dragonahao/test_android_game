@@ -8,7 +8,7 @@
  * 		    *
  *           *x1,y1
  * */
-class Texture{
+class Texture {
 public:
 	Texture(int idTex = 0, bool alpha = false) ;
 	virtual ~Texture();

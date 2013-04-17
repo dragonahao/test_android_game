@@ -30,7 +30,6 @@ import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileWriter;
-import android.os.*;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 
@@ -42,8 +41,6 @@ public class GameActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
         mGLView = new GameGLSurfaceView(this);
-        
-        //mGLView.setEGLConfigChooser(false);
         setContentView(mGLView);
         
     }
@@ -57,33 +54,20 @@ class GameGLSurfaceView extends GLSurfaceView {
         mRenderer = new GameRenderer(context);
         setRenderer(mRenderer);
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-        //setEGLConfigChooser(8, 8, 8, 8, 16, 0);
     }
     public boolean onTouchEvent(final MotionEvent event) {
-       /* if (event.getAction() == MotionEvent.ACTION_MOVE) 
-        	return true;*/
         nativeOnTouch(event.getAction(),event.getX(),event.getY());
-        
-    	/*StringBuilder result=new StringBuilder(300);
-    	result.append("Action: ").append(event.getAction()).append("\n");
-    	result.append("Location: ").append(event.getX()).append(" x ").append(event.getY()).append("\n");
-    	result.append("Presure: ").append(event.getPressure()).append("\n");
-    	result.append("Size: ").append(event.getSize()).append("\n");
-    	result.append("Down Time: ").append(event.getDownTime()).append("\n");
-    	result.append("Event Time(ms): ").append(event.getEventTime()).append("\n");
-    	result.append("Elapsed(ms): ").append(event.getEventTime()-event.getDownTime()).append("\n");
-    	Log.i("Game",result.toString());*/
         return true;
     }
     GameRenderer mRenderer;
-    private static native void nativeOnTouch(int event,float x,float y);
+    private static native void nativeOnTouch(int event, float x, float y);
 }
 
 class GameRenderer implements GLSurfaceView.Renderer {
 	
 	private int mTextureID;
 	private Context mContext;
-	private final static int verts =3;
+	private final static int verts = 3;
     private FloatBuffer mFVertexBuffer;
     private FloatBuffer mTexBuffer;
     private ShortBuffer mIndexBuffer;
@@ -94,18 +78,18 @@ class GameRenderer implements GLSurfaceView.Renderer {
         System.loadLibrary("gamenative");
     }
 	public GameRenderer(Context context) {
-		mContext=context;
-		ByteBuffer vbb=ByteBuffer.allocateDirect(4*2*4);
+		mContext = context;
+		ByteBuffer vbb = ByteBuffer.allocateDirect(32);
 		vbb.order(ByteOrder.nativeOrder());
-		mFVertexBuffer=vbb.asFloatBuffer();
+		mFVertexBuffer = vbb.asFloatBuffer();
 		
-		ByteBuffer vtbb=ByteBuffer.allocateDirect(4*2*4);
+		ByteBuffer vtbb = ByteBuffer.allocateDirect(32);
 		vtbb.order(ByteOrder.nativeOrder());
-		mTexBuffer=vtbb.asFloatBuffer();
+		mTexBuffer = vtbb.asFloatBuffer();
 		
-		ByteBuffer ibb=ByteBuffer.allocateDirect(6*2);
+		ByteBuffer ibb = ByteBuffer.allocateDirect(12);
 		ibb.order(ByteOrder.nativeOrder());
-		mIndexBuffer=ibb.asShortBuffer();
+		mIndexBuffer = ibb.asShortBuffer();
 		
 	}
 	
@@ -157,17 +141,11 @@ class GameRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceChanged(GL10 gl, int w, int h) {
     	gl.glViewport(0, 0, w, h);
-    	float ratio = (float) w/h;
+    	float ratio = (float)w / h;
     	gl.glMatrixMode(GL10.GL_PROJECTION);
     	gl.glLoadIdentity();
     	gl.glFrustumf(-ratio, ratio, -1, 1, 3, 7);
     	nativeResize(w, h);
-        /*new Thread(new Runnable() {
-			public void run() {
-				nativeGameThread();
-			}
-		}).start();*/ 
-        
     }
            
     public void onDrawFrame(GL10 gl) {

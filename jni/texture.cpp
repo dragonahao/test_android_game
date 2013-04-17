@@ -28,7 +28,7 @@ void Texture::draw(){
     glDisable(GL_TEXTURE_2D);
 }
 
-Texture::Texture(int idTex = 0, bool alpha = false) : idTexture(idTex),useAlpha(alpha) {
+Texture::Texture(int idTex, bool alpha) : idTexture(idTex),useAlpha(alpha) {
     coordsTex[0] = 0;
     coordsTex[1] = 1;
     coordsTex[2] = 1;
@@ -42,15 +42,15 @@ Texture::Texture(int idTex = 0, bool alpha = false) : idTexture(idTex),useAlpha(
     }
 }
 
-virtual Texture::~Texture(){
+Texture::~Texture(){
 
 }
 
 void Texture::setUseAlpha(bool alpha){
-    useAlpha=alpha;
+    useAlpha = alpha;
 }
 
-void Texture::setDiagonal(const Diagonal& _diagonal){//Point2f pos0,Point2f pos1){
+void Texture::setDiagonal(const Diagonal& _diagonal){
     diagonal =  _diagonal;
     coords[0] = _diagonal.pos0.x;
     coords[1] = _diagonal.pos1.y;

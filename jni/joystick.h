@@ -4,8 +4,9 @@
 #include "action.h"
 #include "time_.h"
 
+class PushButton;
+
 class Joystick{
-    class PushButton;
 	PushButton* pbLeft;
 	PushButton* pbRight;
 	PushButton* pbUp;
@@ -19,8 +20,8 @@ public:
 		PBDown = 3
 	};
 	Joystick();
-	~Joistick();
-	void setTex(JoystickAction pbType,int texID,bool onPress=true);
+	~Joystick();
+	void setTex(JoystickAction pbType, int texID, bool onPress = true);
 	JoystickAction onTouchEvent(const TouchAction& touchAct);
 	void draw();
 };
