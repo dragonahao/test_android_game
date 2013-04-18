@@ -13,11 +13,15 @@
 class Level;
 
 class GameManager {
+	enum {
+		backgroundTex = 10, tubeTex, pushButtonUpTex, pushButtonUpOnPressTex, pushButtonDownTex, pushButtonDownOnPressTex, pushButtonLeftTex, pushButtonLeftOnPressTex,
+		pushButtonRightTex, pushButtonRightOnPressTex, noteUpTex, noteDownTex, noteLeftTex, noteRightTex
+	};
 	GameManager();
 	~GameManager();
 	GameManager(const GameManager &) {}
 	void operator=(const GameManager & ){}
-	int texCounter;
+	Level * lvl;
 	std::list<Joystick::JoystickAction> userMove;
 	Score score;
 	Texture background;
@@ -27,7 +31,8 @@ class GameManager {
 	NoteList leftNoteList;
 	NoteList rightNoteList;
 	static pthread_mutex_t mutex;
-	Level * lvl;
+	static const int updateTime = 1000; 
+	static int texCounter;
 public:
 	static void lock();
 	static void unlock();

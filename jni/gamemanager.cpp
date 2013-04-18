@@ -1,31 +1,12 @@
 #include "gamemanager.h"
 #include "graphics.h"
 #include <unistd.h>
+#include "level.h"
 
 pthread_mutex_t GameManager::mutex = PTHREAD_MUTEX_INITIALIZER;
+int GameManager::texCounter = 0;
 
-/*For test use only one level*/
-class Level {
-    int number;
-    int plusScore;
-    int minusScore;
-public:
-    Level() : number(0), plusScore(10), minusScore(-10) {}
-    bool isNextLevel(Score & score) {
-        return false;
-    }
-    void addScore(Score & score) {
-        score.value += plusScore;
-    }
-    void delScore(Score & score) {
-        score.value += minusScore;
-    }
-    float getSpeed() {
-        return 0.036f;
-    }
-};
-
-GameManager::GameManager():texCounter(0) {
+GameManager::GameManager() {
     lvl = new Level();
 }
 
@@ -47,68 +28,58 @@ GameManager& GameManager::getInstance() {
 }
 
 void GameManager::setTexture(int texID) {
-	const int backgroundTex = 10;
-	const int tubeTex = 11;
-
-	const int pushButtonUpTex = 12;
-	const int pushButtonUpOnPressTex = 13;
-	const int pushButtonDownTex = 14;
-    const int pushButtonDownOnPressTex = 15;
-    const int pushButtonLeftTex = 16;
-    const int pushButtonLeftOnPressTex = 17;
-    const int pushButtonRightTex = 18;
-    const int pushButtonRightOnPressTex = 19;
-
-	const int noteUpTex = 20;
-	const int noteDownTex = 21;
-	const int noteLeftTex = 22;
-	const int noteRightTex = 23;
-	//add digit texture
-	if(texCounter < backgroundTex)
-		score.addDigit(texCounter, texID);
-	if(texCounter == backgroundTex)
-		background.setID(texID);
-	if(texCounter == tubeTex) {
-		rightTube.setID(texID);
-		leftTube.setID(texID);
-	}
-	if(texCounter == pushButtonUpTex) {
-		joystick.setTex(Joystick::PBUp, texID, false);
-	}
-	if(texCounter == pushButtonUpOnPressTex) {
-		joystick.setTex(Joystick::PBUp, texID, true);
-	}
-	if(texCounter == pushButtonDownTex) {
-		joystick.setTex(Joystick::PBDown, texID, false);
-	}
-	if(texCounter == pushButtonDownOnPressTex) {
-		joystick.setTex(Joystick::PBDown, texID, true);
-	}
-	if(texCounter == pushButtonLeftTex) {
-		joystick.setTex(Joystick::PBLeft, texID, false);
-	}
-	if(texCounter == pushButtonLeftOnPressTex) {
-		joystick.setTex(Joystick::PBLeft, texID, true);
-	}
-	if(texCounter == pushButtonRightTex) {
-		joystick.setTex(Joystick::PBRight, texID, false);
-	}
-	if(texCounter == pushButtonRightOnPressTex) {
-		joystick.setTex(Joystick::PBRight, texID, true);
-	}
-	if(texCounter == noteUpTex) {
-		Note::setTex(Note::up, texID);
-	}
-	if(texCounter == noteDownTex) {
-		Note::setTex(Note::down, texID);
-	}
-	if(texCounter == noteLeftTex) {
-		Note::setTex(Note::left, texID);
-	}
-	if(texCounter == noteRightTex) {
-		Note::setTex(Note::right, texID);
-	}
+	int textureCounter = texCounter;
 	texCounter++;
+	//add digit texture
+	if(textureCounter < backgroundTex) {
+		score.addDigit(textureCounter, texID);
+		return ;
+	}
+	switch(textureCounter) {
+		case backgroundTex: 
+			background.setID(texID);
+		break;
+		case tubeTex: 
+			rightTube.setID(texID);
+			leftTube.setID(texID);
+		break;
+		case pushButtonUpTex:  
+			joystick.setTex(Joystick::PBUp, texID, false);
+		break;
+		case pushButtonUpOnPressTex: 
+			joystick.setTex(Joystick::PBUp, texID, true);
+		break;	
+		case pushButtonDownTex: 
+			joystick.setTex(Joystick::PBDown, texID, false);
+		break;	
+		case pushButtonDownOnPressTex: 
+			joystick.setTex(Joystick::PBDown, texID, true);
+		break;
+		case pushButtonLeftTex: 
+			joystick.setTex(Joystick::PBLeft, texID, false);
+		break;
+		case pushButtonLeftOnPressTex: 
+			joystick.setTex(Joystick::PBLeft, texID, true);
+		break;
+		case pushButtonRightTex: 
+			joystick.setTex(Joystick::PBRight, texID, false);
+		break;
+		case pushButtonRightOnPressTex: 
+			joystick.setTex(Joystick::PBRight, texID, true);
+		break;
+		case noteUpTex: 
+			Note::setTex(Note::up, texID);
+		break;
+		case noteDownTex: 
+			Note::setTex(Note::down, texID);
+		break;
+		case noteLeftTex: 
+			Note::setTex(Note::left, texID);
+		break;
+		case noteRightTex: 
+			Note::setTex(Note::right, texID);
+		break;
+	}
 }
 
 void GameManager::init(){
@@ -116,8 +87,10 @@ void GameManager::init(){
 	leftTube.setDiagonal(Diagonal(Point2f(-1, 0), Point2f(-0.7, -1)));
 	rightTube.setDiagonal(Diagonal(Point2f(0.7, 0), Point2f(1, -1)));
 	leftNoteList.setSpeed(lvl->getSpeed());
+	leftNoteList.setMinDelayBetweenNotes(lvl->getMinDelayBetweenNotes());
 	rightNoteList.setType(Note::toRight);
 	rightNoteList.setSpeed(lvl->getSpeed());
+	rightNoteList.setMinDelayBetweenNotes(lvl->getMinDelayBetweenNotes());
 }
 
 void GameManager::onTouchEvent(const TouchAction& touchAct) {
@@ -203,6 +176,6 @@ void GameManager::loop() {
 		leftNoteList.update();
 		rightNoteList.update();
 		unlock();
-		usleep(1000);
+		usleep(updateTime);
 	}
 }

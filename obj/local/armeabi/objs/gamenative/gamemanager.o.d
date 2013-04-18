@@ -110,7 +110,8 @@ obj/local/armeabi/objs/gamenative/gamemanager.o: jni/gamemanager.cpp \
  /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/sys/select.h \
  /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/sys/sysconf.h \
  /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/linux/capability.h \
- /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/pathconf.h
+ /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/pathconf.h \
+ jni/level.h
 
 jni/gamemanager.h:
 
@@ -343,3 +344,5 @@ jni/joystick.h:
 /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/linux/capability.h:
 
 /home/yunushkin/install/android-ndk-r8e-linux-x86_64/android-ndk-r8e/platforms/android-14/arch-arm/usr/include/pathconf.h:
+
+jni/level.h:

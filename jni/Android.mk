@@ -9,7 +9,7 @@ LOCAL_CFLAGS := -DANDROID_NDK
 LOCAL_SRC_FILES := \
 	graphics.h \
 	graphics.cpp \
-    score.h \
+	score.h \
 	score.cpp \
 	note.h \
 	note.cpp \
@@ -22,6 +22,7 @@ LOCAL_SRC_FILES := \
 	joystick.h \
 	joystick.cpp \
 	time_.h \
+	level.h 
 	
 LOCAL_LDLIBS := -lGLESv1_CM -ldl -llog
 
